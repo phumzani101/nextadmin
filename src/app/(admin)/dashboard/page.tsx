@@ -6,19 +6,14 @@ import AdminRightSidebar from "../components/sidebar/AdminRightSidebar";
 
 const AdminDashboardPage = () => {
   return (
-    <div className="flex gap-5 mt-5">
-      <div className="flex flex-[3] flex-col gap-5">
-        <div className="flex gap-5 justify-between">
-          <StatCard />
-          <StatCard />
-          <StatCard />
-        </div>
-        <Transactions />
-        <AdminChart />
+    <div className="flex flex-1 flex-col gap-5 my-5">
+      <div className="flex gap-5 justify-between">
+        <StatCard />
+        <StatCard />
+        <StatCard />
       </div>
-      <div className="flex flex-col flex-1">
-        <AdminRightSidebar />
-      </div>
+      <Transactions />
+      <AdminChart />
     </div>
   );
 };

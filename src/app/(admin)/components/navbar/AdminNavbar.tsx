@@ -7,7 +7,7 @@ import React from "react";
 const AdminNavbar = () => {
   const pathname = usePathname();
   return (
-    <div className="flex justify-between items-center p-5 rounded-md">
+    <div className="flex justify-between items-center px-5 mt-5 rounded-md bg-slate-200">
       <div className="capitalize font-semibold">
         {pathname.split("/").pop()}
       </div>
