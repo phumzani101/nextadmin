@@ -3,6 +3,8 @@ import {
   BadgeDollarSignIcon,
   LayoutDashboardIcon,
   LogOutIcon,
+  Settings,
+  Settings2,
   ShoppingBasketIcon,
   Users2Icon,
 } from "lucide-react";
@@ -37,27 +39,17 @@ export const adminLinks = [
     ],
   },
   {
-    title: "Pages",
+    title: "Account",
     list: [
       {
-        title: "Dashboard",
-        path: "/dashboard",
-        icon: LayoutDashboardIcon,
+        title: "Account",
+        path: "/dashboard/profile",
+        icon: Settings,
       },
       {
-        title: "Users",
-        path: "/dashboard",
-        icon: Users2Icon,
-      },
-      {
-        title: "Products",
-        path: "/dashboard/products",
-        icon: ShoppingBasketIcon,
-      },
-      {
-        title: "Transactions",
-        path: "/dashboard/transactions",
-        icon: BadgeDollarSignIcon,
+        title: "Settings",
+        path: "/settings",
+        icon: Settings2,
       },
     ],
   },
