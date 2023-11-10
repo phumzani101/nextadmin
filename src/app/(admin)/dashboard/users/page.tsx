@@ -19,6 +19,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import UsersSearch from "../../components/UsersSearch";
+import Link from "next/link";
 
 const AdminUsersPage = () => {
   return (
@@ -28,7 +29,9 @@ const AdminUsersPage = () => {
           <div className="flex items-center justify-between py-4">
             <CardTitle>Users</CardTitle>
             {/* <CardDescription>Card Description</CardDescription> */}
-            <Button>Add Products</Button>
+            <Link href="/dashboard/users/create">
+              <Button>Add Users</Button>
+            </Link>
           </div>
         </CardHeader>
         <CardContent>

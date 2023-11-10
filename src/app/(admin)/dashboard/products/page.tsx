@@ -19,6 +19,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import ProductsSearch from "../../components/Products/ProductsSearch";
+import Link from "next/link";
 
 const AdminProductsPage = () => {
   return (
@@ -28,7 +29,9 @@ const AdminProductsPage = () => {
           <div className="flex items-center justify-between py-4">
             <CardTitle>Products</CardTitle>
             {/* <CardDescription>Card Description</CardDescription> */}
-            <Button>Add Products</Button>
+            <Link href="/dashboard/products/create">
+              <Button>Create Products</Button>
+            </Link>
           </div>
         </CardHeader>
         <CardContent>
