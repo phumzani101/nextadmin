@@ -1,6 +1,6 @@
 "use client";
 import { Input } from "@/components/ui/input";
-import React from "react";
+import React, { FormEvent, useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,18 +10,45 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Search } from "lucide-react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const UsersSearch = () => {
+  const [keyword, setKeyword] = useState("");
+  const pathname = usePathname();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    const params = new URLSearchParams(searchParams);
+    if (keyword) {
+      params.set("page", "1");
+      params.set("q", keyword);
+    } else {
+      params.delete("q");
+    }
+
+    router.replace(`${pathname}/?${params}`);
+  };
+
+  console.log({ pathname, searchParams });
   return (
     <div className="flex items-center justify-between py-4">
       <div>
-        <Input
-          placeholder="Filter emails..."
-          value=""
-          onChange={(event) => {}}
-          className="max-w-sm"
-        />
+        <form onSubmit={handleSubmit}>
+          <div className="flex items-center justify-between py-4 gap-4">
+            <Input
+              placeholder="Filter emails..."
+              value={keyword}
+              onChange={(e) => setKeyword(e.target.value)}
+              className="max-w-sm"
+            />
+            <Button>
+              <Search />
+            </Button>
+          </div>
+        </form>
       </div>
 
       <div>

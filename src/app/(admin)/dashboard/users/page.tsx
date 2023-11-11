@@ -20,8 +20,16 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import UsersSearch from "../../components/UsersSearch";
 import Link from "next/link";
+import { listUsers } from "@/server/actions/userActions";
+import { Eye, EyeIcon, Trash2Icon } from "lucide-react";
 
-const AdminUsersPage = () => {
+const AdminUsersPage = async ({
+  searchParams,
+}: {
+  searchParams: { q: string };
+}) => {
+  const users = (await listUsers({ searchQuery: searchParams?.q })) || [];
+
   return (
     <div className="my-10">
       <Card className="w-full">
@@ -43,172 +51,53 @@ const AdminUsersPage = () => {
                 <TableHead>Email</TableHead>
                 <TableHead>Created At</TableHead>
                 <TableHead>Role</TableHead>
-                <TableHead>Action</TableHead>
-                <TableHead>#</TableHead>
+                <TableHead>Active</TableHead>
+                <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow>
-                <TableCell className="font-medium">
-                  <div className="flex gap-2">
-                    <Image
-                      src="/noavatar.png"
-                      alt=""
-                      width={20}
-                      height={20}
-                      className="rounded-md object-cover"
-                    />
-                    John Doe
-                  </div>
-                </TableCell>
-                <TableCell>major@gmail.com</TableCell>
-                <TableCell>Oct 02 2024</TableCell>
-                <TableCell>user</TableCell>
-                <TableCell>active</TableCell>
+              {users.map((user) => {
+                const imgUrl = user?.image ? user?.image : "/noavatar.png";
+                return (
+                  <TableRow key={user?._id}>
+                    <TableCell className="font-medium">
+                      <div className="flex gap-2">
+                        <Image
+                          src={imgUrl}
+                          alt="Img"
+                          width={20}
+                          height={20}
+                          className="rounded-md object-cover"
+                        />
+                        {user?.name}
+                      </div>
+                    </TableCell>
+                    <TableCell>{user?.email}</TableCell>
+                    <TableCell>
+                      {user?.createdAt?.toString().slice(4, 16)}
+                    </TableCell>
+                    <TableCell>
+                      <Badge>{user.role}</Badge>
+                    </TableCell>
+                    <TableCell>
+                      <Badge variant={user?.isActive ? "secondary" : "outline"}>
+                        {user?.isActive ? "Active" : "Passive"}
+                      </Badge>
+                    </TableCell>
 
-                <TableCell>view Delete</TableCell>
-              </TableRow>
-
-              <TableRow>
-                <TableCell className="font-medium">
-                  <div className="flex gap-2">
-                    <Image
-                      src="/noavatar.png"
-                      alt=""
-                      width={20}
-                      height={20}
-                      className="rounded-md object-cover"
-                    />
-                    John Doe
-                  </div>
-                </TableCell>
-                <TableCell>major@gmail.com</TableCell>
-                <TableCell>Oct 02 2024</TableCell>
-                <TableCell>user</TableCell>
-                <TableCell>active</TableCell>
-
-                <TableCell>view Delete</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="font-medium">
-                  <div className="flex gap-2">
-                    <Image
-                      src="/noavatar.png"
-                      alt=""
-                      width={20}
-                      height={20}
-                      className="rounded-md object-cover"
-                    />
-                    John Doe
-                  </div>
-                </TableCell>
-                <TableCell>major@gmail.com</TableCell>
-                <TableCell>Oct 02 2024</TableCell>
-                <TableCell>user</TableCell>
-                <TableCell>active</TableCell>
-
-                <TableCell>view Delete</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="font-medium">
-                  <div className="flex gap-2">
-                    <Image
-                      src="/noavatar.png"
-                      alt=""
-                      width={20}
-                      height={20}
-                      className="rounded-md object-cover"
-                    />
-                    John Doe
-                  </div>
-                </TableCell>
-                <TableCell>major@gmail.com</TableCell>
-                <TableCell>Oct 02 2024</TableCell>
-                <TableCell>user</TableCell>
-                <TableCell>active</TableCell>
-
-                <TableCell>view Delete</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="font-medium">
-                  <div className="flex gap-2">
-                    <Image
-                      src="/noavatar.png"
-                      alt=""
-                      width={20}
-                      height={20}
-                      className="rounded-md object-cover"
-                    />
-                    John Doe
-                  </div>
-                </TableCell>
-                <TableCell>major@gmail.com</TableCell>
-                <TableCell>Oct 02 2024</TableCell>
-                <TableCell>user</TableCell>
-                <TableCell>active</TableCell>
-
-                <TableCell>view Delete</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="font-medium">
-                  <div className="flex gap-2">
-                    <Image
-                      src="/noavatar.png"
-                      alt=""
-                      width={20}
-                      height={20}
-                      className="rounded-md object-cover"
-                    />
-                    John Doe
-                  </div>
-                </TableCell>
-                <TableCell>major@gmail.com</TableCell>
-                <TableCell>Oct 02 2024</TableCell>
-                <TableCell>user</TableCell>
-                <TableCell>active</TableCell>
-
-                <TableCell>view Delete</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="font-medium">
-                  <div className="flex gap-2">
-                    <Image
-                      src="/noavatar.png"
-                      alt=""
-                      width={20}
-                      height={20}
-                      className="rounded-md object-cover"
-                    />
-                    John Doe
-                  </div>
-                </TableCell>
-                <TableCell>major@gmail.com</TableCell>
-                <TableCell>Oct 02 2024</TableCell>
-                <TableCell>user</TableCell>
-                <TableCell>active</TableCell>
-
-                <TableCell>view Delete</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="font-medium">
-                  <div className="flex gap-2">
-                    <Image
-                      src="/noavatar.png"
-                      alt=""
-                      width={20}
-                      height={20}
-                      className="rounded-md object-cover"
-                    />
-                    John Doe
-                  </div>
-                </TableCell>
-                <TableCell>major@gmail.com</TableCell>
-                <TableCell>Oct 02 2024</TableCell>
-                <TableCell>user</TableCell>
-                <TableCell>active</TableCell>
-
-                <TableCell>view Delete</TableCell>
-              </TableRow>
+                    <TableCell className="flex gap-2">
+                      <Link href={`/dashboard/users/${user._id}`}>
+                        <Button variant="outline" size="sm">
+                          <EyeIcon size={16} />
+                        </Button>
+                      </Link>
+                      <Button variant="destructive" size="sm">
+                        <Trash2Icon size={16} />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </CardContent>
