@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -16,17 +15,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+
 import { Textarea } from "@/components/ui/textarea";
 import { createUser } from "@/server/actions/userActions";
-import { useRouter } from "next/navigation";
-import { Switch } from "@/components/ui/switch";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -44,32 +35,24 @@ const formSchema = z.object({
   bio: z.string().min(2, {
     message: "Bio must be at least 2 characters.",
   }),
-  role: z.string().min(1),
-  isActive: z.boolean(),
 });
 
-const UserAddPage = () => {
-  const router = useRouter();
+const UserForm = ({ user }: { user?: any }) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-      phone: "",
-      bio: "",
-      role: "user",
-      isActive: false,
+      name: user?.name || "",
+      email: user?.email || "",
+      password: user?.password || "",
+      phone: user?.phone || "",
+      bio: user?.bio || "",
     },
   });
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
     try {
       await createUser(values);
-      router.push("/dashboard/users");
     } catch (error) {
       console.log(error);
     }
@@ -168,50 +151,6 @@ const UserAddPage = () => {
                   </FormItem>
                 )}
               />
-
-              <FormField
-                control={form.control}
-                name="role"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>User Role</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select User Role" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="user">User</SelectItem>
-                        <SelectItem value="admin">Admin</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="isActive"
-                render={({ field }) => (
-                  <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
-                    <div className="space-y-0.5">
-                      <FormLabel className="text-base">IsAdmin</FormLabel>
-                      <FormDescription>Active or Passive</FormDescription>
-                    </div>
-                    <FormControl>
-                      <Switch
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
               <Button type="submit" className="w-full">
                 Submit
               </Button>
@@ -223,4 +162,4 @@ const UserAddPage = () => {
   );
 };
 
-export default UserAddPage;
+export default UserForm;
